@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Force IA — Point 11</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --noir: #0A0A0A;
+    --blanc: #F5F2ED;
+    --accent: #E8FF47;
+    --accent-dim: rgba(232,255,71,0.08);
+    --accent-border: rgba(232,255,71,0.2);
+    --gris: #1C1C1C;
+    --gris-mid: #2E2E2E;
+    --gris-light: #888;
+  }
+
+  body {
+    background: var(--noir);
+    color: var(--blanc);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--gris-mid);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--noir);
+  }
+
+  .logo-block { display: flex; align-items: center; gap: 14px; }
+
+  .logo-badge {
+    background: var(--accent);
+    color: var(--noir);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    padding: 4px 10px;
+    line-height: 1;
+  }
+
+  .logo-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gris-light);
+    line-height: 1.7;
+  }
+
+  .logo-label span { color: var(--accent); }
+
+  .header-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gris-light);
+    border: 1px solid var(--gris-mid);
+    padding: 5px 12px;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 80px 40px 60px;
+    border-bottom: 1px solid var(--gris-mid);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    top: -30px;
+    right: -10px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(100px, 20vw, 200px);
+    color: rgba(232,255,71,0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.02em;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 10vw, 110px);
+    line-height: 0.92;
+    letter-spacing: 0.01em;
+    color: var(--blanc);
+    max-width: 800px;
+    margin-bottom: 28px;
+  }
+
+  .hero-title em { color: var(--accent); font-style: normal; }
+
+  .hero-desc {
+    font-size: 14px;
+    color: var(--gris-light);
+    line-height: 1.8;
+    max-width: 500px;
+    font-weight: 300;
+  }
+
+  /* SECTION */
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gris-light);
+    padding: 28px 40px 16px;
+    border-bottom: 1px solid var(--gris-mid);
+  }
+
+  /* NEWS GRID */
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    border-bottom: 1px solid var(--gris-mid);
+  }
+
+  .news-card {
+    border-right: 1px solid var(--gris-mid);
+    padding: 32px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: background 0.16s ease;
+    position: relative;
+    overflow: hidden;
+    min-height: 260px;
+  }
+
+  .news-card:last-child { border-right: none; }
+  .news-card:hover { background: var(--gris); }
+  .news-card:hover .card-arrow { transform: translate(3px, -3px); }
+
+  .card-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 60px;
+    color: rgba(232,255,71,0.07);
+    line-height: 1;
+    position: absolute;
+    top: 20px;
+    right: 24px;
+  }
+
+  .card-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    padding: 4px 10px;
+    width: fit-content;
+  }
+
+  .card-tag.muted {
+    color: var(--gris-light);
+    background: rgba(136,136,136,0.08);
+    border-color: rgba(136,136,136,0.2);
+  }
+
+  .card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    letter-spacing: 0.03em;
+    color: var(--blanc);
+    line-height: 1.05;
+  }
+
+  .card-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--gris-light);
+    letter-spacing: 0.12em;
+  }
+
+  .card-excerpt {
+    font-size: 13px;
+    color: var(--gris-light);
+    line-height: 1.6;
+    font-weight: 300;
+    flex: 1;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--gris-mid);
+    margin-top: auto;
+  }
+
+  .card-cta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .card-cta.muted { color: var(--gris-light); }
+
+  .card-arrow {
+    color: var(--accent);
+    font-size: 16px;
+    transition: transform 0.16s ease;
+  }
+
+  .card-arrow.muted { color: var(--gris-light); }
+
+  .card-coming { opacity: 0.45; pointer-events: none; }
+
+  /* RESOURCES */
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    border-bottom: 1px solid var(--gris-mid);
+  }
+
+  .res-card {
+    border-right: 1px solid var(--gris-mid);
+    border-left: 3px solid transparent;
+    padding: 24px 28px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: background 0.16s, border-left-color 0.16s;
+  }
+
+  .res-card:last-child { border-right: none; }
+  .res-card:hover { background: var(--gris); border-left-color: var(--accent); }
+
+  .res-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2px;
+  }
+
+  .res-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--blanc);
+    line-height: 1.35;
+  }
+
+  .res-meta {
+    font-size: 12px;
+    color: var(--gris-light);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .res-arrow {
+    margin-top: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--gris-light);
+  }
+
+  /* INFO BANNER */
+  .info-banner {
+    border-bottom: 1px solid var(--gris-mid);
+    padding: 20px 40px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .info-bullet {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  .info-text {
+    font-size: 13px;
+    color: var(--gris-light);
+    line-height: 1.7;
+    font-weight: 300;
+    max-width: 700px;
+  }
+
+  .info-text strong { color: var(--blanc); font-weight: 500; }
+
+  /* FOOTER */
+  footer {
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-left {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gris-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .footer-left strong { color: var(--accent); }
+
+  .dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.35; transform: scale(0.65); }
+  }
+
+  .footer-right {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--gris-light);
+    letter-spacing: 0.1em;
+  }
+
+  .divider { height: 1px; background: var(--gris-mid); }
+
+  @media (max-width: 600px) {
+    header, .hero, .section-label, .info-banner, footer { padding-left: 20px; padding-right: 20px; }
+    .news-card, .res-card { border-right: none; border-bottom: 1px solid var(--gris-mid); }
+    .hero { padding-top: 50px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-block">
+    <div class="logo-badge">P11</div>
+    <div class="logo-label">
+      <span>Task Force IA</span><br>
+      Veille · Expérimentations · Cas clients
+    </div>
+  </div>
+  <div class="header-tag">Hub IA</div>
+</header>
+
+<section class="hero">
+  <div class="hero-bg">IA</div>
+  <div class="eyebrow">Point 11 — Intelligence Artificielle</div>
+  <h1 class="hero-title">La mémoire<br><em>IA</em><br>de l'agence.</h1>
+  <p class="hero-desc" style="margin-bottom:16px;">Chaque mois, la Task Force IA produit une newsletter avec ce qu'on teste, ce qu'on valide, et ce que ça change dans nos process. Toutes les éditions sont archivées ici — accessibles à tout moment, depuis n'importe où.</p>
+  <p class="hero-desc">Ce hub centralise aussi les ressources utiles : tutos, process validés, outils à connaître. Une page, un lien fixe, tout est là.</p>
+</section>
+
+<div class="section-label">— Toutes les éditions · de la plus récente à la première</div>
+
+<div class="news-grid">
+
+  <!-- ============================================================
+       ÉDITIONS — Pour ajouter une nouvelle news :
+       1. Copier le bloc <a class="news-card"> le plus récent
+       2. Changer le numéro, le href, le titre, la date, l'extrait
+       3. Mettre à jour le card-tag de la news précédente :
+          remplacer "Dernière édition" par "Édition #X"
+       4. Supprimer ou déplacer la carte "À venir" en bas
+  ============================================================ -->
+  <a class="news-card" href="http://taskforceia-news2.netlify.app/" target="_blank" rel="noopener">
+    <div class="card-number">02</div>
+    <span class="card-tag">Dernière édition</span>
+    <div class="card-title">IA News #2</div>
+    <div class="card-date">Mai 2026</div>
+    <p class="card-excerpt">Retouche augmentée, packaging IA, conformité automatisée, motion, drone, 3D générative.</p>
+    <div class="card-footer">
+      <span class="card-cta">Lire la news</span>
+      <span class="card-arrow">↗</span>
+    </div>
+  </a>
+
+  <a class="news-card" href="https://taskforceia-news1.netlify.app/" target="_blank" rel="noopener">
+    <div class="card-number">01</div>
+    <span class="card-tag">Édition fondatrice</span>
+    <div class="card-title">IA News #1</div>
+    <div class="card-date">Mars 2026</div>
+    <p class="card-excerpt">Déclinaisons de gamme, créa & génération, cas Motul, shoot IA Carrefour, montée en puissance vidéo.</p>
+    <div class="card-footer">
+      <span class="card-cta">Lire la news</span>
+      <span class="card-arrow">↗</span>
+    </div>
+  </a>
+
+  <div class="news-card card-coming">
+    <div class="card-number">03</div>
+    <span class="card-tag muted">Prochaine édition</span>
+    <div class="card-title">IA News #3</div>
+    <div class="card-date">Juin 2026</div>
+    <p class="card-excerpt">En préparation — résultats task force du mois.</p>
+    <div class="card-footer">
+      <span class="card-cta muted">À venir</span>
+      <span class="card-arrow muted">→</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-label">— Ressources utiles · tutos &amp; process validés</div>
+
+<div class="resources-grid">
+
+  <!-- ============================================================
+       RESSOURCES UTILES — Pour ajouter une ressource :
+       Copier un bloc <a class="res-card"> ... </a> ci-dessous
+       et renseigner href, res-label, res-title, res-meta
+  ============================================================ -->
+
+  <a class="res-card" href="https://docs.google.com/presentation/d/1OMJJYTB5YQl44HOg2uGz9nDXQTcaT8WK43earAt0URo/edit?slide=id.g3e4053e37c6_0_80" target="_blank" rel="noopener">
+    <div class="res-label">Tuto · Gemini</div>
+    <div class="res-title">Enhancing prompt — améliorer une image client</div>
+    <div class="res-meta">Damien Gibot · Mai 2026 — 2 prompts pour reconstruire netteté, texture et détail sans changer le contenu.</div>
+    <div class="res-arrow">Voir le document ↗</div>
+  </a>
+
+  <a class="res-card" href="https://drive.google.com/a/point11.fr/open?id=1HPIw_cP-kYglVqjAvQL1WpLVzIyTXEIQqIc_krvNQJ4" target="_blank" rel="noopener">
+    <div class="res-label">Gouvernance</div>
+    <div class="res-title">Charte d'utilisation IA Point 11</div>
+    <div class="res-meta">Les règles d'usage des outils IA en interne — périmètre, principes, bonnes pratiques.</div>
+    <div class="res-arrow">Voir le document ↗</div>
+  </a>
+
+</div>
+
+<div class="info-banner">
+  <div class="info-bullet"></div>
+  <p class="info-text">
+    <strong>Une adresse fixe, un contenu qui grandit.</strong> Ce hub est mis à jour à chaque nouvelle édition et à chaque ressource validée. Bookmarkez-le — vous le retrouverez aussi en bas de chaque newsletter.
+  </p>
+</div>
+
+<footer>
+  <div class="footer-left">
+    <strong>Point 11</strong>
+    <span class="dot"></span>
+    Task Force IA — Arnaud Caribault
+    <span class="dot"></span>
+    Mis à jour chaque mois
+  </div>
+  <div class="footer-right">taskforceia.netlify.app</div>
+</footer>
+
+</body>
+</html>
